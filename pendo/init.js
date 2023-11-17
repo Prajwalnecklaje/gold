@@ -10,18 +10,14 @@
         // Please use Strings, Numbers, or Bools for value types.
         pendo.initialize({
             visitor: {
-                id: "propertyUser-new",
-                full_name: "Darshan Hulswar",
-                typeTesting: 99,
-                listProperty: ["128", "129", "130", "131", "240"],
-                numericList: [400, 500, 600, 700, 800],
-                birthDate: "1999-11-28"
+                id: "id1",
+                full_name: "prajwal neclaje",
+                age: 21,
             },
         
             account: {
-                id: "fastrack_account",
+                id: "ant1",
                 name: "SOFTLAND_ACCOUNT",
-                DAU: 99
             },
            
         });
