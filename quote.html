@@ -194,6 +194,22 @@
     </header>
     <!-- end header section -->
   </div>
+  <div class="blockquote-wrapper">
+        <div class="blockquote">
+            <h1 id="quote">
+                Intuitive design happens when <span style="color:#ffffff">current knowledge</span> is the same as the <span style="color:#ffffff">target knowledge.</span>
+            </h1>
+            <h4 id="author">
+                &mdash;Jared Spool<br><em>Web Site Usability: A Designer's Guide</em>
+            </h4>
+            <button class="edit-button" onclick="editText('quote')">Edit Quote</button>
+            <button class="edit-button" onclick="editText('author')">Edit Author</button>
+            <div id="editableArea" style="display: none;">
+                <textarea id="editInput" class="editable-input"></textarea>
+                <button onclick="saveText()">Save</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         var currentEditable = '';
