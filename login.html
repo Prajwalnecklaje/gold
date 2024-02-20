@@ -160,11 +160,11 @@ form .signup-link a:hover{
             <form action="#">
                <div class="data">
                   <label>Email or Phone</label>
-                  <input type="text" required>
+                  <input type="text" id="email" placeholder="Enter Email" name="email" required>
                </div>
                <div class="data">
                   <label>Password</label>
-                  <input type="password" required>
+                  <input type="password" id="password" placeholder="Enter password" name="password" required>
                </div>
                <div class="forgot-pass">
                   <a href="#">Forgot Password?</a>
@@ -180,4 +180,49 @@ form .signup-link a:hover{
          </div>
       </div>
    </body>
+   <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA07hf41-EYJe4XbJ57TTEpjbl9gofYmkc",
+      authDomain: "signup-5cff9.firebaseapp.com",
+      projectId: "signup-5cff9",
+      storageBucket: "signup-5cff9.appspot.com",
+      messagingSenderId: "585618685768",
+      appId: "1:585618685768:web:0a891ba1c02a12c2933d7d",
+      measurementId: "G-HFWNWVB5GF"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+  signUp.addEventListener('click',(e) => {
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var username = document.getElementById('').value;
+
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+    // Signed up 
+        const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+
+  });
+  </script>
 </html>
