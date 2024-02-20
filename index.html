@@ -22,6 +22,65 @@
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA07hf41-EYJe4XbJ57TTEpjbl9gofYmkc",
+      authDomain: "signup-5cff9.firebaseapp.com",
+      projectId: "signup-5cff9",
+      storageBucket: "signup-5cff9.appspot.com",
+      messagingSenderId: "585618685768",
+      appId: "1:585618685768:web:0a891ba1c02a12c2933d7d",
+      measurementId: "G-HFWNWVB5GF"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    // Your custom functions
+    // Function to update UI with logged-in user's name
+    function updateUI(user) {
+      if (user) {
+        // User is logged in
+        const displayName = user.displayName;
+        // Display the user's name at the top of your webpage
+        document.getElementById('user-display').innerText = `Welcome, ${displayName}`;
+      } else {
+        // User is not logged in
+        // Clear the user's name from the UI
+        document.getElementById('user-display').innerText = '';
+      }
+    }
+
+    // Login function
+    function loginWithEmail() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Logged in successfully
+          const user = userCredential.user;
+          // Call a function to update UI with logged-in user's name
+          updateUI(user);
+        })
+        .catch((error) => {
+          // Handle login errors
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error(errorMessage);
+        });
+    }
+  </script>
 </head>
 
 <body>
@@ -55,6 +114,13 @@
                 <a class="nav-link" href="category.html"> Category </a>
               </li>
             </ul>
+            <h1>Login Page</h1>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="loginWithEmail()">Login</button>
+
+  <!-- Display user's name -->
+  <div id="user-display"></div>
             <div class="user_option">
               <a href="login.html">
                 <span>
