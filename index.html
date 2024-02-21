@@ -535,6 +535,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   
   // Your Firebase configuration
   const firebaseConfig = {
@@ -550,18 +551,24 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
+  const auth = getAuth();
 
-  // Get reference to the current user's data in the database
-  const userRef = ref(database, 'users/USER_UID'); // Replace 'USER_UID' with the actual UID of the logged-in user
+  // Get the currently logged-in user
+  const user = auth.currentUser;
+  if (user) {
+      const userRef = ref(database, 'users/' + user.uid);
 
-  // Listen for changes to the user's data in the database
-  onValue(userRef, (snapshot) => {
-      const userData = snapshot.val();
-      // Display the user's name
-      if (userData && userData.displayName) {
-          document.getElementById('user-info').innerText = `Hello, ${userData.displayName}!`;
-      }
-  });
+      // Listen for changes to the user's data in the database
+      onValue(userRef, (snapshot) => {
+          const userData = snapshot.val();
+          // Display the user's name
+          if (userData && userData.displayName) {
+              document.getElementById('user-info').innerText = `Hello, ${userData.displayName}!`;
+          }
+      });
+  } else {
+      console.error('No user is currently logged in.');
+  }
 </script>
 </body>
 
