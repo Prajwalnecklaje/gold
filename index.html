@@ -81,6 +81,9 @@
 
         </nav>
       </div>
+      <div id="user-info">
+        <!-- User's name will be displayed here -->
+    </div>
     </header>
     <!-- end header section -->
     <!-- slider section -->
@@ -529,6 +532,37 @@
 
 
 </body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  
+  // Your Firebase configuration
+  const firebaseConfig = {
+      apiKey: "AIzaSyA07hf41-EYJe4XbJ57TTEpjbl9gofYmkc",
+      authDomain: "signup-5cff9.firebaseapp.com",
+      projectId: "signup-5cff9",
+      storageBucket: "signup-5cff9.appspot.com",
+      messagingSenderId: "585618685768",
+      appId: "1:585618685768:web:0a891ba1c02a12c2933d7d",
+      measurementId: "G-HFWNWVB5GF"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  // Get reference to the current user's data in the database
+  const userRef = ref(database, 'users/USER_UID'); // Replace 'USER_UID' with the actual UID of the logged-in user
+
+  // Listen for changes to the user's data in the database
+  onValue(userRef, (snapshot) => {
+      const userData = snapshot.val();
+      // Display the user's name
+      if (userData && userData.displayName) {
+          document.getElementById('user-info').innerText = `Hello, ${userData.displayName}!`;
+      }
+  });
+</script>
 </body>
 
 </html>
