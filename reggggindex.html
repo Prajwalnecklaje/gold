@@ -1,35 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up Page</title>
-  <!-- Add any additional meta tags, stylesheets, or scripts here -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  
+            
 </head>
 <body>
-  <section>
-    <!-- User's name will be displayed here -->
-    <div id="modal-signup" class="modal">
-      <div class="modal-content">
-        <h4>Sign up</h4><br />
-        <form id="signup-form">
-          <div class="input-field">
-            <input type="email" id="signup-email" required />
-            <label for="signup-email">Email address</label>
-          </div>
-          <div class="input-field">
-            <input type="password" id="signup-password" required />
-            <label for="signup-password">Choose password</label>
-          </div>
-          <div class="input-field">
-            <input type="text" id="signup-bio" required />
-            <label for="signup-bio">One Line Bio</label>
-          </div>
-          <button class="btn yellow darken-2 z-depth-0" type="submit">Sign up</button>
-        </form>
-      </div>
+    <nav>
+        <div class="nav-wrapper #fbc02d yellow darken-2">
+          <a href="#" class="brand-logo">Job portal</a>
+          <ul id="nav-mobile" class="right">
+            <li id="loginli"><a class="modal-trigger" href="#modal2">Login</a></li>
+            <li  id="signupli"><a class="modal-trigger" href="#modal1">Signup</a></li>
+            <li  id="logoutli"><a onclick="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    <!--Signup Modal -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Signup</h4>
+      <form autocomplete="off" onsubmit="signup(event)">
+        <input type="email" id="signupEmail" placeholder="email" />
+        <input type="password" id="signupPassword" placeholder="password" />
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+       <button class="btn waves-effect blue" onclick="loginWithGoogle()">Login with google</button>
+      
+     
     </div>
-  </section>
-  <!-- Add any additional scripts or closing tags here -->
+  </div>
+         
+    <!--login Modal -->
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <h4>Login</h4>
+      <form autocomplete="off" onsubmit="login(event)">
+        <input type="email" id="loginEmail" placeholder="email" />
+        <input type="password" id="loginPassword" placeholder="password" />
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+      <button class="btn waves-effect blue" onclick="loginWithGoogle()">Login with google</button>
+      
+     
+    </div>
+  </div>
+    <!--edit profile -->
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <h4>Edit your details</h4>
+      <div class="file-field input-field">
+        <div class="btn #fbc02d yellow darken-2">
+          <span>File</span>
+          <input type="file" accept="image/*" onchange="uploadImage(event)" />
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+      <form autocomplete="off" id="editProfile" onsubmit="updateUserProfile(event)">
+        <input type="email" name="profileEmail" placeholder="email" />
+        <input type="text" name="name" placeholder="name" />
+        <input type="text" name="phoneno" placeholder="phoneno" />
+        <input type="text" name="specialty" placeholder="speciality" />
+        <input type="text" name="prorfolioUrl" placeholder="protfolio url" />
+        <input type="text" name="experience" placeholder="experience" />
+
+        <button class="btn waves-effect #fbc02d yellow darken-2" type="submit">submit</button>   
+      </form>
+  
+      
+     
+    </div>
+  </div>
+
+
+  <div class="center">
+    <h1>your account details</h1>
+    <img id="proimg" class="circle" src="./assets/noimage.png" alt="noimage" style="width: 50%;height: auto;" />
+    <div class="userDetails"></div>
+  </div>
+         
+  <table id="table" style="display: none;">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>speciality</th>
+          <th>ex</th>
+          <th>portfolio</th>
+      </tr>
+    </thead>
+
+    <tbody id="tbody">
+     
+    </tbody>
+  </table>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>  
+<script>
+      document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>  
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyA07hf41-EYJe4XbJ57TTEpjbl9gofYmkc",
+    authDomain: "signup-5cff9.firebaseapp.com",
+    projectId: "signup-5cff9",
+    storageBucket: "signup-5cff9.appspot.com",
+    messagingSenderId: "585618685768",
+    appId: "1:585618685768:web:0a891ba1c02a12c2933d7d",
+    measurementId: "G-HFWNWVB5GF"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script src="./scripts/auth.js"></script>
+<script src="./scripts/firestore-db.js" ></script>
 </body>
 </html>
