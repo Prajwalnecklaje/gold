@@ -13,7 +13,7 @@
                 id: "id1",
                 full_name: "prajwal neclaje",
                 age: 21,
-                language: 'hi'
+                locale: 'hi'
             },
         
             account: {
