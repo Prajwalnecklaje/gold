@@ -1,4 +1,4 @@
-/*(function(apiKey){
+(function(apiKey){
     (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
     v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
         o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
@@ -22,4 +22,4 @@
             },
            
         });
-})('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');*/
+})('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
