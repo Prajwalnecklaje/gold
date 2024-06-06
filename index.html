@@ -34,6 +34,12 @@
     text-align: center;
 }
 </style>
+<script type="text/javascript">
+  function openPopup() {
+      const url = "https://goldbuyers.netlify.app/iframes"; // Replace with your iframe URL
+      window.open(url, "_blank", "width=600,height=400");
+  }
+</script>
 </head>
 
 <body>
@@ -222,7 +228,9 @@
   <button type="button" class="block">
     <a href="test.html">Testing</a>
 </button>
-
+<section>
+  <a href="iframes.html" onclick="openPopup()">Open Popup</a>
+</section>
 
   <!-- footer section -->
   <footer class="container-fluid footer_section ">
