@@ -33,6 +33,18 @@
     cursor: pointer;
     text-align: center;
 }
+.open-button {
+    background-color: #555;
+    color: rgb(255, 255, 255);
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
 </style>
 <script type="text/javascript">
   function openPopup() {
@@ -229,7 +241,7 @@
     <a href="test.html">Testing</a>
 </button>
 <section>
-  <a onclick="openPopup()">Open Popup</a>
+  <button class="open-button" onclick="openPopup()">Open Form</button>
 </section>
 
   <!-- footer section -->
