@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rearranged Page with Dynamic Popup</title>
+<style>
+/* CSS for the popup */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.popup-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+.block {
+    width: 60px;
+    height: 30px; /* Adjust height as needed */
+}
+
+.popup:hover .popup-content {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<!-- Dropdown menu -->
+<label for="dog-names">Choose a dog name:</label>
+<select name="dog-names" id="dog-names">
+    <option value="rigatoni">Rigatoni</option>
+    <option value="dave">Dave</option>
+    <option value="pumpernickel">Pumpernickel</option>
+    <option value="reeses">Reeses</option>
+</select>
+
+<!-- Table with Dynamic Popup -->
+<table border="1">
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Options</th>
+  </tr>
+  <tr>
+    <td>Data 1</td>
+    <td>Data 2</td>
+    <td>
+      <div class="popup" onclick="showOptions('options1')">...</div>
+      <div id="options1" class="popup-content">
+        <p>Content for Option 1</p>
+        <p>Content for Option 2</p>
+        <p>Content for Option 3</p>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Data 3</td>
+    <td>Data 4</td>
+    <td>
+      <div class="popup" onclick="showOptions('options2')">...</div>
+      <div id="options2" class="popup-content">
+        <p>Different Content for Option 1</p>
+        <p>Different Content for Option 2</p>
+        <p>Different Content for Option 3</p>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<!-- YouTube Video -->
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y0sF5xhGreA?si=rpWz5dgrqO7pcgtW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<!-- Button -->
+<button type="button" class="block">
+    <a href="quote.html">Testing</a>
+</button>
+
+<script>
+function showOptions(id) {
+  var content = document.getElementById(id);
+  content.style.display = "block";
+}
+</script>
+<script src="./pendo/init.js"></script>
+</body>
+</html>
