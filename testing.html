@@ -50,13 +50,13 @@
             // Initialize Pendo with visitor and account data
             pendo.initialize({
                 visitor: {
-                    id: "id1",               // Replace with dynamic visitor ID if available
+                    id: "id1",               // Replace with actual visitor ID if available
                     full_name: "prajwal neclaje",
                     age: 21,
                     language: 'hi'
                 },
                 account: {
-                    id: "ant1",             // Replace with dynamic account ID if available
+                    id: "ant1",             // Replace with actual account ID if available
                     name: "SOFTLAND_ACCOUNT"
                 },
                 doNotProcess: doNotProcess // Respect user consent
@@ -69,32 +69,40 @@
         if (consent === 'yes') {
             // User consents to being tracked
             initializePendo(false); // Initialize Pendo without "Do Not Process" flag
-        } else {
+        } else if (consent === 'no') {
             // User does not consent to being tracked
             initializePendo(true); // Initialize Pendo with "Do Not Process" flag
         }
     }
 
+    // Check consent status on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        // Example logic to check for previously given consent
+        // You might use localStorage or cookies to remember user choice
+        // For example:
+        // const userConsent = localStorage.getItem('userConsent');
+        // if (userConsent) {
+        //     handleConsent(userConsent);
+        // } else {
+        //     document.getElementById('consentBanner').style.display = 'block';
+        // }
+        document.getElementById('consentBanner').style.display = 'block'; // Show consent banner initially
+    });
+
     // Event listeners for consent buttons
     document.getElementById('accept').addEventListener('click', function() {
         document.getElementById('consentBanner').style.display = 'none';
         handleConsent('yes'); // User accepted tracking
+        // Optionally save consent choice
+        // localStorage.setItem('userConsent', 'yes');
     });
 
     document.getElementById('decline').addEventListener('click', function() {
         document.getElementById('consentBanner').style.display = 'none';
         handleConsent('no'); // User declined tracking
+        // Optionally save consent choice
+        // localStorage.setItem('userConsent', 'no');
     });
-
-    // Example logic to check consent status on page load
-    // You might use localStorage or cookies to remember user choice
-    // For example:
-    // const userConsent = localStorage.getItem('userConsent');
-    // if (userConsent) {
-    //     handleConsent(userConsent);
-    // } else {
-    //     document.getElementById('consentBanner').style.display = 'block';
-    // }
 </script>
 
 </body>
