@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tracking Consent</title>
+    <title>Flexbox Example</title>
     <style>
-        #consentBanner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #fff;
-            border-top: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            z-index: 1000;
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
         }
-        #consentBanner button {
-            margin: 0 5px;
+        .container {
+            display: flex;
+            justify-content: space-around; /* Distributes space between items */
+            align-items: center; /* Aligns items vertically */
+            width: 80%;
+            height: 50%;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .item {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1; /* Items grow equally */
+            margin: 10px; /* Space between items */
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+    </div>
 
-<div id="consentBanner">
-    <p>We use tracking to improve your experience. Do you consent to be tracked?</p>
-    <button id="accept">Yes</button>
-    <button id="decline">No</button>
-</div>
+
 
 <script>
     // Function to initialize Pendo with optional "Do Not Process" flag
