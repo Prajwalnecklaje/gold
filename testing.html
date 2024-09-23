@@ -58,10 +58,10 @@
 
         // Show the Pendo guide only when the toggle is turned on
         if (toggle.classList.contains('on')) {
-            pendo.showGuideById('8SjIolqHbME_jJKB0hg-6Y3qqAY'); // Use the provided guide ID
+            pendo.showGuideById('8SjIolqHbME_jJKB0hg-6Y3qqAY'); // Show guide on toggle on
         } else {
             // Dismiss the guide until the next page reload
-            pendo.onGuideDismissed({ until: 'reload' });
+            pendo.onGuideDismissed({ until: 'reload' }); // Dismiss guide when toggle is off
         }
     });
 </script>
