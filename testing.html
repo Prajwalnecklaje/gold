@@ -3,44 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flexbox Example</title>
+    <title>Toggle Switch</title>
     <style>
-        body {
-            margin: 0;
-            height: 100vh;
+        .toggle-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
         }
-        .container {
-            display: flex;
-            justify-content: space-around; /* Distributes space between items */
-            align-items: center; /* Aligns items vertically */
-            width: 80%;
-            height: 50%;
-            background-color: #fff;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .item {
-            background-color: #4CAF50; /* Green background */
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            flex: 1; /* Items grow equally */
-            margin: 10px; /* Space between items */
+
+        .toggle::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.on {
+            background-color: #4CAF50;
+        }
+
+        .toggle.on::before {
+            transform: translateX(26px);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="item">Item 1</div>
-        <div class="item">Item 2</div>
-        <div class="item">Item 3</div>
-    </div>
+
+<div class="toggle-container">
+    <div class="toggle" id="toggle"></div>
+    <span id="status">Off</span>
+</div>
+
+<script>
+    const toggle = document.getElementById('toggle');
+    const status = document.getElementById('status');
+
+    toggle.addEventListener('click', () => {
+        toggle.classList.toggle('on');
+        status.textContent = toggle.classList.contains('on') ? 'On' : 'Off';
+    });
+</script>
+
 <script src="./pendo/init.js"></script>
 
 </body>
