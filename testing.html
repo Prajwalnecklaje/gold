@@ -56,8 +56,8 @@
         toggle.classList.toggle('on');
         status.textContent = toggle.classList.contains('on') ? 'On' : 'Off';
 
-        // Show the Pendo guide only when the toggle is turned on
-        if (toggle.classList.contains('on')) {
+        // Show the Pendo guide only when the toggle has the 'on' class
+        if (toggle.className.includes('on')) { // Check if the toggle has the 'on' class
             pendo.showGuideById('8SjIolqHbME_jJKB0hg-6Y3qqAY'); // Show guide on toggle on
         } else {
             // Dismiss the guide until the next page reload
