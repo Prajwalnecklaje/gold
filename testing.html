@@ -51,19 +51,20 @@
     const toggle = document.getElementById('toggle');
 
     toggle.addEventListener('click', () => {
-        toggle.classList.toggle('on');
-
-        // Show the Pendo guide only when the toggle has the 'on' class
-        if (toggle.classList.contains('on')) { // Check if the toggle has the 'on' class
-            pendo.showGuideById('8SjIolqHbME_jJKB0hg-6Y3qqAY'); // Show guide on toggle on
+        // Determine the current URL
+        const url = new URL(window.location.href);
+        
+        // Toggle the parameter based on the current state
+        if (url.searchParams.get('toggle') === 'on') {
+            url.searchParams.set('toggle', 'off');
         } else {
-            // Dismiss the guide until the next page reload
-            pendo.onGuideDismissed({ until: 'reload' }); // Dismiss guide when toggle is off
+            url.searchParams.set('toggle', 'on');
         }
+
+        // Update the URL without reloading the page
+        window.history.pushState({}, '', url);
     });
 </script>
-
-<script src="./pendo/init.js"></script>
 
 </body>
 </html>
