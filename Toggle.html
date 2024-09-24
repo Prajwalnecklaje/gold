@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Switch</title>
+    <style>
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background-color: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.on {
+            background-color: #4CAF50;
+        }
+
+        .toggle.on::before {
+            transform: translateX(26px);
+        }
+
+        .toggle.active {
+            border: 2px solid #4CAF50; /* Optional: Change border when active */
+        }
+    </style>
+</head>
+<body>
+
+<div class="toggle-container">
+    <div class="toggle" id="toggle"></div>
+</div>
+
+<script>
+    const toggle = document.getElementById('toggle');
+
+    // Function to show Pendo guide
+    const showPendoGuide = (guideId) => {
+        if (window.pendo) {
+            window.pendo.showGuideById(guideId);
+        }
+    };
+
+    // Function to update toggle state visually and in the URL
+    const updateToggleState = () => {
+        const url = new URL(window.location.href);
+        const isOn = url.searchParams.get('toggle') === 'on';
+
+        // Toggle state
+        if (isOn) {
+            url.searchParams.set('toggle', 'off');
+            toggle.classList.remove('on', 'active'); // Remove active class
+            showPendoGuide('AyOW6w-nihHvboRq6eXC5rZuAuw'); // Show Pendo guide when toggled off
+        } else {
+            url.searchParams.set('toggle', 'on');
+            toggle.classList.add('on', 'active'); // Add active class
+        }
+
+        // Update the URL without reloading the page
+        window.history.pushState({}, '', url);
+    };
+
+    // Initial state based on URL
+    const initToggleState = () => {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('toggle') === 'on') {
+            toggle.classList.add('on', 'active'); // Set initial state as active
+        }
+    };
+
+    // Event listener for toggle click
+    toggle.addEventListener('click', updateToggleState);
+
+    // Initialize toggle state on page load
+    initToggleState();
+
+    // Function to create a URL with parameters
+    function createUrlWithParams(baseUrl, params) {
+        const url = new URL(baseUrl);
+        for (const [key, value] of Object.entries(params)) {
+            url.searchParams.set(key, value);
+        }
+        return url.toString();
+    }
+
+    // Example usage of createUrlWithParams
+    const newUrl = createUrlWithParams(window.location.origin + window.location.pathname, { toggle: 'on', user: '123' });
+    console.log(newUrl); // Logs the new URL with parameters
+</script>
+
+<script src="./pendo/init.js"></script>
+
+</body>
+</html>
