@@ -8,6 +8,7 @@
         .toggle-container {
             display: flex;
             align-items: center;
+            margin: 20px;
         }
 
         .toggle {
@@ -50,20 +51,50 @@
 <script>
     const toggle = document.getElementById('toggle');
 
-    toggle.addEventListener('click', () => {
-        // Determine the current URL
+    // Function to update toggle state visually and in the URL
+    const updateToggleState = () => {
         const url = new URL(window.location.href);
-        
-        // Toggle the parameter based on the current state
-        if (url.searchParams.get('toggle') === 'on') {
+        const isOn = url.searchParams.get('toggle') === 'on';
+
+        // Toggle state
+        if (isOn) {
             url.searchParams.set('toggle', 'off');
+            toggle.classList.remove('on');
         } else {
             url.searchParams.set('toggle', 'on');
+            toggle.classList.add('on');
         }
 
         // Update the URL without reloading the page
         window.history.pushState({}, '', url);
-    });
+    };
+
+    // Initial state based on URL
+    const initToggleState = () => {
+        const url = new URL(window.location.href);
+        if (url.searchParams.get('toggle') === 'on') {
+            toggle.classList.add('on');
+        }
+    };
+
+    // Event listener for toggle click
+    toggle.addEventListener('click', updateToggleState);
+
+    // Initialize toggle state on page load
+    initToggleState();
+
+    // Function to create a URL with parameters
+    function createUrlWithParams(baseUrl, params) {
+        const url = new URL(baseUrl);
+        for (const [key, value] of Object.entries(params)) {
+            url.searchParams.set(key, value);
+        }
+        return url.toString();
+    }
+
+    // Example usage of createUrlWithParams
+    const newUrl = createUrlWithParams(window.location.origin + window.location.pathname, { toggle: 'on', user: '123' });
+    console.log(newUrl); // Logs the new URL with parameters
 </script>
 
 <script src="./pendo/init.js"></script>
