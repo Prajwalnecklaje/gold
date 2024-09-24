@@ -40,6 +40,10 @@
         .toggle.on::before {
             transform: translateX(26px);
         }
+
+        .toggle.active {
+            border: 2px solid #4CAF50; /* Optional: Change border when active */
+        }
     </style>
 </head>
 <body>
@@ -59,10 +63,10 @@
         // Toggle state
         if (isOn) {
             url.searchParams.set('toggle', 'off');
-            toggle.classList.remove('on');
+            toggle.classList.remove('on', 'active'); // Remove active class
         } else {
             url.searchParams.set('toggle', 'on');
-            toggle.classList.add('on');
+            toggle.classList.add('on', 'active'); // Add active class
         }
 
         // Update the URL without reloading the page
@@ -73,7 +77,7 @@
     const initToggleState = () => {
         const url = new URL(window.location.href);
         if (url.searchParams.get('toggle') === 'on') {
-            toggle.classList.add('on');
+            toggle.classList.add('on', 'active'); // Set initial state as active
         }
     };
 
