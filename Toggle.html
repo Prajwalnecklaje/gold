@@ -21,6 +21,10 @@
             transition: background-color 0.3s;
         }
 
+        .toggle.on {
+            background-color: #4CAF50;
+        }
+
         .toggle::before {
             content: "";
             position: absolute;
@@ -33,24 +37,8 @@
             transition: transform 0.3s;
         }
 
-        .toggle.on {
-            background-color: #4CAF50;
-        }
-
         .toggle.on::before {
             transform: translateX(26px);
-        }
-
-        .toggle.off {
-            background-color: #ccc; /* Color when off */
-        }
-
-        .toggle.inactive {
-            opacity: 0.5; /* Change opacity when inactive */
-        }
-
-        .toggle.active {
-            border: 2px solid #4CAF50; /* Optional: Change border when active */
         }
     </style>
 </head>
@@ -75,40 +63,24 @@
 
         if (isOn) {
             url.searchParams.set('toggle', 'off');
-            toggle.classList.remove('on', 'active'); // Remove active class
-            toggle.classList.add('off', 'inactive'); // Add off and inactive classes
             showPendoGuide('AyOW6w-nihHvboRq6eXC5rZuAuw');
         } else {
             url.searchParams.set('toggle', 'on');
-            toggle.classList.add('on', 'active'); // Add active class
-            toggle.classList.remove('off', 'inactive'); // Remove off and inactive classes
         }
 
+        // Update the URL without reloading the page
         window.history.pushState({}, '', url);
     };
 
     const initToggleState = () => {
         const url = new URL(window.location.href);
         if (url.searchParams.get('toggle') === 'on') {
-            toggle.classList.add('on', 'active');
-        } else {
-            toggle.classList.add('off', 'inactive'); // Set initial state as off and inactive
+            toggle.classList.add('on'); // Optional: for initial rendering
         }
     };
 
     toggle.addEventListener('click', updateToggleState);
     initToggleState();
-
-    function createUrlWithParams(baseUrl, params) {
-        const url = new URL(baseUrl);
-        for (const [key, value] of Object.entries(params)) {
-            url.searchParams.set(key, value);
-        }
-        return url.toString();
-    }
-
-    const newUrl = createUrlWithParams(window.location.origin + window.location.pathname, { toggle: 'on', user: '123' });
-    console.log(newUrl);
 </script>
 
 <script src="./pendo/init.js"></script>
