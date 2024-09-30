@@ -41,6 +41,14 @@
             transform: translateX(26px);
         }
 
+        .toggle.off {
+            background-color: #ccc; /* Color when off */
+        }
+
+        .toggle.inactive {
+            opacity: 0.5; /* Change opacity when inactive */
+        }
+
         .toggle.active {
             border: 2px solid #4CAF50; /* Optional: Change border when active */
         }
@@ -55,47 +63,42 @@
 <script>
     const toggle = document.getElementById('toggle');
 
-    // Function to show Pendo guide
     const showPendoGuide = (guideId) => {
         if (window.pendo) {
             window.pendo.showGuideById(guideId);
         }
     };
 
-    // Function to update toggle state visually and in the URL
     const updateToggleState = () => {
         const url = new URL(window.location.href);
         const isOn = url.searchParams.get('toggle') === 'on';
 
-        // Toggle state
         if (isOn) {
             url.searchParams.set('toggle', 'off');
             toggle.classList.remove('on', 'active'); // Remove active class
-            showPendoGuide('AyOW6w-nihHvboRq6eXC5rZuAuw'); // Show Pendo guide when toggled off
+            toggle.classList.add('off', 'inactive'); // Add off and inactive classes
+            showPendoGuide('AyOW6w-nihHvboRq6eXC5rZuAuw');
         } else {
             url.searchParams.set('toggle', 'on');
             toggle.classList.add('on', 'active'); // Add active class
+            toggle.classList.remove('off', 'inactive'); // Remove off and inactive classes
         }
 
-        // Update the URL without reloading the page
         window.history.pushState({}, '', url);
     };
 
-    // Initial state based on URL
     const initToggleState = () => {
         const url = new URL(window.location.href);
         if (url.searchParams.get('toggle') === 'on') {
-            toggle.classList.add('on', 'active'); // Set initial state as active
+            toggle.classList.add('on', 'active');
+        } else {
+            toggle.classList.add('off', 'inactive'); // Set initial state as off and inactive
         }
     };
 
-    // Event listener for toggle click
     toggle.addEventListener('click', updateToggleState);
-
-    // Initialize toggle state on page load
     initToggleState();
 
-    // Function to create a URL with parameters
     function createUrlWithParams(baseUrl, params) {
         const url = new URL(baseUrl);
         for (const [key, value] of Object.entries(params)) {
@@ -104,9 +107,8 @@
         return url.toString();
     }
 
-    // Example usage of createUrlWithParams
     const newUrl = createUrlWithParams(window.location.origin + window.location.pathname, { toggle: 'on', user: '123' });
-    console.log(newUrl); // Logs the new URL with parameters
+    console.log(newUrl);
 </script>
 
 <script src="./pendo/init.js"></script>
