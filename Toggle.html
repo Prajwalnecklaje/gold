@@ -21,12 +21,7 @@
             transition: background-color 0.3s;
         }
 
-        .toggle.on {
-            background-color: #4CAF50;
-        }
-
-        .toggle::before {
-            content: "";
+        .toggle-head {
             position: absolute;
             width: 22px;
             height: 22px;
@@ -36,20 +31,19 @@
             left: 1px;
             transition: transform 0.3s;
         }
-
-        .toggle.on::before {
-            transform: translateX(26px);
-        }
     </style>
 </head>
 <body>
 
 <div class="toggle-container">
-    <div class="toggle" id="toggle"></div>
+    <div class="toggle" id="toggle">
+        <div class="toggle-head" id="toggleHead"></div>
+    </div>
 </div>
 
 <script>
     const toggle = document.getElementById('toggle');
+    const toggleHead = document.getElementById('toggleHead');
 
     const showPendoGuide = (guideId) => {
         if (window.pendo) {
@@ -63,9 +57,13 @@
 
         if (isOn) {
             url.searchParams.set('toggle', 'off');
+            toggle.style.backgroundColor = '#ccc'; // Change background color
+            toggleHead.style.transform = 'translateX(0)'; // Move head to the left
             showPendoGuide('AyOW6w-nihHvboRq6eXC5rZuAuw');
         } else {
             url.searchParams.set('toggle', 'on');
+            toggle.style.backgroundColor = '#4CAF50'; // Change background color
+            toggleHead.style.transform = 'translateX(26px)'; // Move head to the right
         }
 
         // Update the URL without reloading the page
@@ -75,7 +73,11 @@
     const initToggleState = () => {
         const url = new URL(window.location.href);
         if (url.searchParams.get('toggle') === 'on') {
-            toggle.classList.add('on'); // Optional: for initial rendering
+            toggle.style.backgroundColor = '#4CAF50'; // Set background to on
+            toggleHead.style.transform = 'translateX(26px)'; // Move head to the right
+        } else {
+            toggle.style.backgroundColor = '#ccc'; // Set background to off
+            toggleHead.style.transform = 'translateX(0)'; // Move head to the left
         }
     };
 
