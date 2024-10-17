@@ -51,17 +51,20 @@ drift.SNIPPET_VERSION = '0.3.1';
 drift.load('cwdrmtp2h9p9');
 
 
-// Function to show the Resource Center
-
 // Function to show the Resource Center and replace its content
 function openAndReplaceResourceCenter() {
+    // Ensure Pendo is ready
     if (typeof pendo !== 'undefined' && pendo.showGuideById) {
         // Show the Resource Center
         pendo.showGuideById('lYNTfdIt4to7sJgcAKZ-10vYhZw');
 
-        // Use a small delay to allow the Resource Center to load before replacing content
+        // Use a delay to allow the Resource Center to load before replacing content
         setTimeout(function() {
-            pendo.BuildingBlocks.BuildingBlockResourceCenter.replaceResourceCenterContent("lId2jetC-LA3qpQLugnQIy-Bz0E@lYNTfdIt4to7sJgcAKZ-10vYhZw");
+            if (pendo.BuildingBlocks && pendo.BuildingBlocks.BuildingBlockResourceCenter) {
+                pendo.BuildingBlocks.BuildingBlockResourceCenter.replaceResourceCenterContent("lId2jetC-LA3qpQLugnQIy-Bz0E@lYNTfdIt4to7sJgcAKZ-10vYhZw");
+            } else {
+                console.error('Resource Center building block is not available.');
+            }
         }, 1000); // Adjust delay as needed
     } else {
         console.error('Pendo is not initialized yet.');
@@ -70,6 +73,8 @@ function openAndReplaceResourceCenter() {
 
 // Event listener for when the page loads
 window.addEventListener('load', function() {
-    openAndReplaceResourceCenter();
+    // Adding a slight delay before executing the function
+    setTimeout(openAndReplaceResourceCenter, 500); // Adjust delay if necessary
 });
+
 
