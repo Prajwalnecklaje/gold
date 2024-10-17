@@ -49,3 +49,21 @@
 }();
 drift.SNIPPET_VERSION = '0.3.1';
 drift.load('cwdrmtp2h9p9');
+
+
+// Function to show the Resource Center
+function openResourceCenter() {
+    // Check if Pendo is ready before showing the guide
+    if (typeof pendo !== 'undefined' && pendo.showGuideById) {
+        pendo.showGuideById('lYNTfdIt4to7sJgcAKZ-10vYhZw');
+    } else {
+        console.error('Pendo is not initialized yet.');
+    }
+}
+
+// Event listener for when the page loads
+window.addEventListener('load', function() {
+    // Small delay to ensure Pendo is fully loaded
+    setTimeout(openResourceCenter, 1000); // Adjust the delay as needed
+});
+
