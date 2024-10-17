@@ -52,10 +52,17 @@ drift.load('cwdrmtp2h9p9');
 
 
 // Function to show the Resource Center
-function openResourceCenter() {
-    // Check if Pendo is ready before showing the guide
+
+// Function to show the Resource Center and replace its content
+function openAndReplaceResourceCenter() {
     if (typeof pendo !== 'undefined' && pendo.showGuideById) {
+        // Show the Resource Center
         pendo.showGuideById('lYNTfdIt4to7sJgcAKZ-10vYhZw');
+
+        // Use a small delay to allow the Resource Center to load before replacing content
+        setTimeout(function() {
+            pendo.BuildingBlocks.BuildingBlockResourceCenter.replaceResourceCenterContent("lId2jetC-LA3qpQLugnQIy-Bz0E@lYNTfdIt4to7sJgcAKZ-10vYhZw");
+        }, 1000); // Adjust delay as needed
     } else {
         console.error('Pendo is not initialized yet.');
     }
@@ -63,7 +70,6 @@ function openResourceCenter() {
 
 // Event listener for when the page loads
 window.addEventListener('load', function() {
-    // Small delay to ensure Pendo is fully loaded
-    setTimeout(openResourceCenter, 1000); // Adjust the delay as needed
+    openAndReplaceResourceCenter();
 });
 
