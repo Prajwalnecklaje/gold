@@ -9,16 +9,13 @@
         // You will need to replace <visitor-id-goes-here> and <account-id-goes-here> with values you use in your app
         // Please use Strings, Numbers, or Bools for value types.
         pendo.initialize({
-            visitor: {
-                id: "id1",
-                full_name: "prajwal neclaje",
-                age: 21,
-                language: 'hi'
+             visitor: {
+                id: "Adriana110424@SphinxSolutions.com",
+                
             },
         
             account: {
-                id: "ant1",
-                name: "SOFTLAND_ACCOUNT",
+                id: "Sphinx Solutions",
             },
            
         });
