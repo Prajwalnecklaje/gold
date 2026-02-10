@@ -1,353 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Elements Test Page</title>
-    <style>
+<meta charset="UTF-8" />
+<title>Pendo Embedded Guide Flash – Issue Repro</title>
 
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
 
-     canvas {
-            border: 1px solid black;
-        }
-        .checkbox-label {
-    display: inline-block;
-    padding: 10px;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-}
+  #table {
+    border: 1px solid #ccc;
+    padding: 20px;
+    min-height: 80px;
+    margin-top: 20px;
+  }
 
-.checkbox-label.checked {
-    background-color: #4caf50;
-    border-color: #388e3c;
-    color: white;
-}
+  .empty-state {
+    color: gray;
+  }
 
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        #table{
-            background: linear-gradient(rgb(72, 119, 206),rgb(199, 93, 199),rgb(148, 148, 59));
-        }
-        .hehe{
-            animation: ammer;
-            animation-direction:normal;
-            text-shadow: #e90e0e;
-            text-transform: uppercase;
-            text-align: center;
-            border: "1";
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-            background: #eccaca;
-            border: 2 ;
-            border-color: #860505;
-
-        }
-        @keyframes ammer{
-
-        }
-       .sip{
-        padding-top: 1%;
-        padding-bottom: 3%;
-       }
-       .eee{
-        
-       }
-    </style>
-    <script src= 
-    "https://code.jquery.com/jquery-3.5.1.js"> 
-        </script> 
-      
+  .row {
+    color: green;
+  }
+</style>
 </head>
+
 <body>
 
-<h1>Test Page</h1>
+<h2>Embedded Guide Flash – Issue Reproduction</h2>
 
-<!-- Text Elements -->
-<p>This is a paragraph.</p>
-<h1>Heading 1</h1>
-<h2>Heading 2</h2>
-<h3>Heading 3</h3>
+<button id="searchBtn">Search (No Results)</button>
 
-<!-- Form Elements -->
-<form>
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name"><br><br>
-    
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email"><br><br>
-    
-    <label for="age">Age:</label><br>
-    <input type="number" id="age" name="age"><br><br>
-    
-    <label for="message">Message:</label><br>
-    <textarea id="message" name="message"></textarea><br><br>
-    
-    <input type="submit" value="Submit">
-</form>
-
-<!-- List Elements -->
-<ul>
-    <li>Unordered list item 1</li>
-    <li>Unordered list item 2</li>
-    <li>Unordered list item 3</li>
-</ul>
-
-<ol>
-    <li>Ordered list item 1</li>
-    <li>Ordered list item 2</li>
-    <li>Ordered list item 3</li>
-</ol>
-<section class="sip">
-<select class="eee">
-    <option>option 1</option>
-    <option>option 1</option>
-    <option>option 1</option>
-    <option>option 1</option>
-</select>
-</section>
-<!-- Table Elements -->
-<table border="1">
-    <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <th>Header 3</th>
-    </tr>
-    <tr>
-        <td>Data 1</td>
-        <td>Data 2</td>
-        <td>Data 3</td>
-    </tr>
-    <tr>
-        <td>Data 4</td>
-        <td>Data 5</td>
-        <td>Data 6</td>
-    </tr>
-</table>
-
-<!-- Button to open modal -->
-<button id="myBtn1">Open Modal 1</button>
-<button id="myBtn2">Open Modal 2</button>
-
-<!-- Modals -->
-<div id="myModal1" class="modal">
-    <div class="modal-content">
-        <span class="close" id="close1">&times;</span>
-        <p>This is the content of Modal 1.</p>
-    </div>
-</div>
-
-<div id="myModal2" class="modal">
-    <div class="modal-content">
-        <span class="close" id="close2">&times;</span>
-        <p>This is the content of Modal 2</p>
-    </div>
-</div>
-    <!-- check box -->
-<div class="checkbox-wrapper">
-        <input type="checkbox" id="myCheckbox">
-        <label for="myCheckbox" class="checkbox-label">Click me</label>
-    </div>
-    <script>document.addEventListener('DOMContentLoaded', function() {
-    const checkbox = document.getElementById('myCheckbox');
-    const label = document.querySelector('.checkbox-label');
-
-    checkbox.addEventListener('change', function() {
-        if (checkbox.checked) {
-            label.classList.add('checked');
-        } else {
-            label.classList.remove('checked');
-        }
-    });
-});
-    </script>
-<!-- Iframe -->
-<h2>Iframe</h2>
-<iframe src="https://prajwalnecklaje.github.io/" width="600" height="400"></iframe>
-
-
-<section>
-    <canvas id="myCanvas" width="500" height="400">Your browser does not support the HTML5 canvas tag.</canvas>
+<div id="table"></div>
 
 <script>
-    // Getting the canvas element
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');  // Setting up a 2D context for drawing
+/* =====================================================
+   SIMULATE ANT DESIGN TABLE EMPTY STATE
+===================================================== */
 
-    // Drawing a rectangle
-    ctx.fillStyle = "blue";
-    ctx.fillRect(50, 50, 150, 100);  // x, y, width, height
+// Table renders empty state immediately
+const table = document.getElementById('table');
+table.innerHTML = `<div class="empty-state">No Data</div>`;
 
-    // Drawing a circle
-    ctx.beginPath();
-    ctx.arc(300, 100, 50, 0, 2 * Math.PI);  // x, y, radius, startAngle, endAngle
-    ctx.fillStyle = "green";
-    ctx.fill();
-
-    // Drawing a line
-    ctx.beginPath();
-    ctx.moveTo(50, 300);  // Starting point
-    ctx.lineTo(450, 300); // Ending point
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-    ctx.stroke();
+// Simulate async data load (data appears later)
+setTimeout(() => {
+  table.innerHTML = `<div class="row">Row 1</div>`;
+}, 1000);
 </script>
-</section>
-
-<section> 
-    <h1 class="hehe">USer details from json</h1> 
-
-    <!-- TABLE CONSTRUCTION-->
-    <table id='table' border="1"> 
-        <!-- HEADING FORMATION -->
-        <tr> 
-            <th>User ID</th> 
-            <th>ID</th> 
-            <th>Title</th> 
-            <th>Body</th> 
-        </tr> 
-
-        <script> 
-            $(document).ready(function () { 
-
-                // FETCHING DATA FROM JSON FILE 
-                $.getJSON("prajwal.json",  
-                        function (data) { 
-                    var users = ''; 
-
-                    // ITERATING THROUGH OBJECTS 
-                    $.each(data, function (key, value) { 
-
-                        //CONSTRUCTION OF ROWS HAVING 
-                        // DATA FROM JSON OBJECT 
-                        users += '<tr>'; 
-                        users += '<td>' +  
-                            value.userId + '</td>'; 
-
-                        users += '<td>' +  
-                            value.id + '</td>'; 
-
-                        users += '<td>' +  
-                            value.title + '</td>'; 
-
-                        users += '<td>' +  
-                            value.body + '</td>'; 
-
-                        users += '</tr>'; 
-                    }); 
-                      
-                    //INSERTING ROWS INTO TABLE  
-                    $('#table').append(users); 
-                }); 
-            }); 
-        </script> 
-</section> 
 
 <script>
-    // Get the modal
-    var modal1 = document.getElementById("myModal1");
-    var modal2 = document.getElementById("myModal2");
+/* =====================================================
+   SIMULATE PENDO EMBEDDED GUIDE BEHAVIOR
+   (THIS IS WHAT CAUSES THE FLASH)
+===================================================== */
 
-    // Get the button that opens the modal
-    var btn1 = document.getElementById("myBtn1");
-    var btn2 = document.getElementById("myBtn2");
+function injectEmbeddedGuide() {
+  if (document.querySelector('[data-pendo-guide]')) return;
 
-    // Get the <span> element that closes the modal
-    var span1 = document.getElementById("close1");
-    var span2 = document.getElementById("close2");
+  const guide = document.createElement('div');
+  guide.setAttribute('data-pendo-guide', 'true');
+  guide.textContent = '📌 Embedded Guide: No Results Found';
+  table.appendChild(guide);
+}
 
-    // When the user clicks the button, open the modal 
-    btn1.onclick = function() {
-        modal1.style.display = "block";
-    }
-    btn2.onclick = function() {
-        modal2.style.display = "block";
-    }
+// Pendo agent scans DOM immediately
+const pendoScan = setInterval(() => {
+  if (document.querySelector('.empty-state')) {
+    injectEmbeddedGuide();
+    clearInterval(pendoScan);
+  }
+}, 10);
+</script>
 
-    // When the user clicks on <span> (x), close the modal
-    span1.onclick = function() {
-        modal1.style.display = "none";
-    }
-    span2.onclick = function() {
-        modal2.style.display = "none";
-    }
+<script>
+/* =====================================================
+   USER PERFORMS SEARCH → NO RESULTS
+===================================================== */
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal1) {
-            modal1.style.display = "none";
-        }
-        if (event.target == modal2) {
-            modal2.style.display = "none";
-        }
-    }
-    </script>
-    <script>
-    (function(apiKey){
-    (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
-    v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
-        o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
-        y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
-        z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
-
-        // This function creates visitors and accounts in Pendo
-        // You will need to replace <visitor-id-goes-here> and <account-id-goes-here> with values you use in your app
-        // Please use Strings, Numbers, or Bools for value types.
-        pendo.initialize({
-            visitor: {
-                id: "prajwal-testing",
-                full_name: "prajwal necklaje",
-                age: 21,
-                language: 'hi',
-                email: "prajwal@email.com",
-                role: "engineer"
-            },
-        
-            account: {
-                id: "testing-account",
-                name: "PN_ACCOUNT",
-            },
-           
-        });
-    })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
-
+document.getElementById('searchBtn').onclick = () => {
+  table.innerHTML = `
+    <div class="empty-state">No search results</div>
+  `;
+};
 </script>
 
 </body>
