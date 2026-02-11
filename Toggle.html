@@ -2,7 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pendo Survey Test Page</title>
+  <title>Pendo Survey Test – Rotating Visitors</title>
+
+  <script>
+    // Create 10 fixed visitor IDs
+    const visitors = [
+      "test_user_01",
+      "test_user_02",
+      "test_user_03",
+      "test_user_04",
+      "test_user_05",
+      "test_user_06",
+      "test_user_07",
+      "test_user_08",
+      "test_user_09",
+      "test_user_10"
+    ];
+
+    // Rotate visitor on each refresh
+    let index = localStorage.getItem("visitorIndex");
+    index = index ? (parseInt(index) + 1) % visitors.length : 0;
+    localStorage.setItem("visitorIndex", index);
+
+    const visitorId = visitors[index];
+    console.log("Pendo Visitor ID:", visitorId);
+  </script>
 
   <!-- Pendo Snippet -->
   <script>
@@ -11,15 +35,18 @@
         var v,w,x,y,z;o=p[d]=p[d]||{};
         o._q=o._q||[];v=['initialize','identify','updateOptions','pageLoad','track'];
         for(w=0,x=v.length;w<x;++w)(function(m){
-          o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};
+          o[m]=o[m]||function(){
+            o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));
+          };
         })(v[w]);
-        y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+        y=e.createElement(n);y.async=!0;
+        y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
         z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);
       })(window,document,'script','pendo');
 
       pendo.initialize({
         visitor: {
-          id: "test_user_001"
+          id: visitorId
         },
         account: {
           id: "test_account_001"
@@ -28,26 +55,16 @@
     })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
   </script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-    }
-  </style>
 </head>
 <body>
 
-  <h1>Pendo Survey Testing Page</h1>
+  <h1>Pendo Survey Test Page</h1>
+  <p>Refresh the page to simulate a new visitor.</p>
+  <p><strong>Current Visitor ID:</strong> <span id="vid"></span></p>
 
-  <p>Use these buttons to represent different features.</p>
-
-  <button id="featureA">Feature A</button>
-  <button id="featureB">Feature B</button>
-  <button id="featureC">Feature C</button>
+  <script>
+    document.getElementById("vid").innerText = visitorId;
+  </script>
 
 </body>
 </html>
