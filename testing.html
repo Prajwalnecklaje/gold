@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Pendo Embedded Guide Flash – Issue Repro</title>
+<title>Pendo Embedded Guide – Fixed</title>
 
 <style>
   body {
@@ -17,6 +17,10 @@
     margin-top: 20px;
   }
 
+  .loading {
+    color: #888;
+  }
+
   .empty-state {
     color: gray;
   }
@@ -29,7 +33,7 @@
 
 <body>
 
-<h2>Embedded Guide Flash – Issue Reproduction</h2>
+<h2>Embedded Guide – Correct Implementation</h2>
 
 <button id="searchBtn">Search (No Results)</button>
 
@@ -37,14 +41,15 @@
 
 <script>
 /* =====================================================
-   SIMULATE ANT DESIGN TABLE EMPTY STATE
+   INITIAL PAGE LOAD (NO EMPTY STATE)
 ===================================================== */
 
-// Table renders empty state immediately
 const table = document.getElementById('table');
-table.innerHTML = `<div class="empty-state">No Data</div>`;
 
-// Simulate async data load (data appears later)
+// Show loading state instead of empty state
+table.innerHTML = `<div class="loading">Loading data…</div>`;
+
+// Simulate async data fetch
 setTimeout(() => {
   table.innerHTML = `<div class="row">Row 1</div>`;
 }, 1000);
@@ -52,31 +57,7 @@ setTimeout(() => {
 
 <script>
 /* =====================================================
-   SIMULATE PENDO EMBEDDED GUIDE BEHAVIOR
-   (THIS IS WHAT CAUSES THE FLASH)
-===================================================== */
-
-function injectEmbeddedGuide() {
-  if (document.querySelector('[data-pendo-guide]')) return;
-
-  const guide = document.createElement('div');
-  guide.setAttribute('data-pendo-guide', 'true');
-  guide.textContent = '📌 Embedded Guide: No Results Found';
-  table.appendChild(guide);
-}
-
-// Pendo agent scans DOM immediately
-const pendoScan = setInterval(() => {
-  if (document.querySelector('.empty-state')) {
-    injectEmbeddedGuide();
-    clearInterval(pendoScan);
-  }
-}, 10);
-</script>
-
-<script>
-/* =====================================================
-   USER PERFORMS SEARCH → NO RESULTS
+   USER SEARCH → NO RESULTS (EMPTY STATE APPEARS)
 ===================================================== */
 
 document.getElementById('searchBtn').onclick = () => {
@@ -85,6 +66,9 @@ document.getElementById('searchBtn').onclick = () => {
   `;
 };
 </script>
+
+<!-- Real Pendo agent -->
 <script src="./pendo/init.js"></script>
+
 </body>
 </html>
