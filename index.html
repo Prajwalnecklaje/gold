@@ -2,99 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pendo Hash Routing Repro</title>
-
-  <script>
-    const visitors = [
-      "test_user_01",
-      "test_user_02",
-      "test_user_03",
-      "test_user_04",
-      "test_user_05",
-      "test_user_06",
-      "test_user_07",
-      "test_user_08",
-      "test_user_09",
-      "test_user_10",
-      "Vignesh",
-      "Rakshith"
-    ];
-
-    let index = localStorage.getItem("visitorIndex");
-    index = index ? (parseInt(index) + 1) % visitors.length : 0;
-    localStorage.setItem("visitorIndex", index);
-
-    window.visitorId = visitors[index];
-    console.log("Pendo Visitor ID:", window.visitorId);
-  </script>
-
-  <!-- Pendo Snippet -->
-  <script>
-    (function(apiKey){
-      (function(p,e,n,d,o){
-        var v,w,x,y,z;o=p[d]=p[d]||{};
-        o._q=o._q||[];v=['initialize','identify','updateOptions','pageLoad','track'];
-        for(w=0,x=v.length;w<x;++w)(function(m){
-          o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};
-        })(v[w]);
-        y=e.createElement(n);y.async=!0;
-        y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
-        z=e.getElementsByTagName(n)[0];
-        z.parentNode.insertBefore(y,z);
-      })(window,document,'script','pendo');
-
-      // ❌ Intentionally DO NOT initialize on legacy hash route
-      function initPendoIfAllowed() {
-        if (window.location.hash === '#/signin') {
-          console.warn('Pendo NOT initialized on legacy login route');
-          return;
-        }
-
-        pendo.initialize({
-          visitor: { id: window.visitorId },
-          account: { id: "test_account_001" }
-        });
-
-        console.log('Pendo initialized');
-      }
-
-      initPendoIfAllowed();
-
-      // Re-check on hash change (simulates SPA behavior)
-      window.addEventListener('hashchange', initPendoIfAllowed);
-
-    })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
-  </script>
+  <title>Pendo Embedded Guide – RC Repro (Clean)</title>
 
   <style>
-    body { font-family: Arial, sans-serif; padding: 40px; }
-    button { margin: 10px; padding: 10px 20px; }
-    .route { margin-top: 30px; font-weight: bold; }
-  </style>
-</head>
-<body>
-
-  <h1>Pendo Hash-Based Login Repro</h1>
-
-  <button onclick="location.hash='/'">Home</button>
-  <button onclick="location.hash='/signin'">Legacy Login (#/signin)</button>
-
-  <div class="route" id="routeView"></div>
-
-  <script>
-    function renderRoute() {
-      const view = document.getElementById('routeView');
-
-      if (location.hash === '#/signin') {
-        view.innerHTML = '🔐 Legacy Login Page (Pendo not initialized)';
-      } else {
-        view.innerHTML = '🏠 Home Page (Pendo initialized)';
-      }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
     }
 
-    window.addEventListener('hashchange', renderRoute);
-    renderRoute();
-  </script>
+    #table {
+      border: 1px solid #ccc;
+      padding: 20px;
+      min-height: 80px;
+      margin-top: 20px;
+    }
+
+    .loading {
+      color: #888;
+    }
+
+    .empty-state {
+      color: gray;
+    }
+
+    .row {
+      color: green;
+    }
+
+    button {
+      margin-right: 10px;
+      margin-top: 10px;
+      padding: 8px 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Embedded Guide – Correct Implementation (RC Repro)</h2>
+
+<!-- App buttons -->
+<button id="searchBtn">Search (No Results)</button>
+<button id="openRC">Open Help (Resource Center)</button>
+<button id="closeRC">Close Help</button>
+
+<div id="table"></div>
+
+<script>
+/* =====================================================
+   INITIAL PAGE LOAD (NO EMPTY STATE)
+===================================================== */
+
+const table = document.getElementById('table');
+
+// Show loading state instead of empty state
+table.innerHTML = `<div class="loading">Loading data…</div>`;
+
+// Simulate async data fetch
+setTimeout(() => {
+  table.innerHTML = `<div class="row">Row 1</div>`;
+}, 1000);
+</script>
+
+<script>
+/* =====================================================
+   USER SEARCH → NO RESULTS (EMPTY STATE APPEARS)
+===================================================== */
+
+document.getElementById('searchBtn').onclick = () => {
+  table.innerHTML = `<div class="empty-state">No search results</div>`;
+};
+</script>
+
+<!-- =====================================================
+     PENDO INITIALIZATION (SAFE – ONCE)
+===================================================== -->
+<script>
+  (function(apiKey){
+    (function(p,e,n,d,o){
+      var v,w,x,y,z;
+      o=p[d]=p[d]||{};
+      o._q=o._q||[];
+      v=['initialize','identify','updateOptions','pageLoad','track'];
+      for(w=0,x=v.length;w<x;++w)(function(m){
+        o[m]=o[m]||function(){
+          o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));
+        };
+      })(v[w]);
+      y=e.createElement(n);y.async=!0;
+      y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+      z=e.getElementsByTagName(n)[0];
+      z.parentNode.insertBefore(y,z);
+    })(window,document,'script','pendo');
+
+    // ✅ Initialize ONCE
+    pendo.initialize({
+      visitor: {
+        id: 'rc_repro_user'
+      },
+      account: {
+        id: 'rc_repro_account'
+      }
+    });
+
+    console.log('Pendo initialized');
+  })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
+</script>
+
+<!-- =====================================================
+     RESOURCE CENTER CONTROLS
+===================================================== -->
+<script>
+  function openResourceCenter() {
+    if (
+      window.pendo &&
+      window.pendo.BuildingBlocks &&
+      window.pendo.BuildingBlocks.BuildingBlockResourceCenter
+    ) {
+      window.pendo
+        .BuildingBlocks
+        .BuildingBlockResourceCenter
+        .getResourceCenter()
+        .show();
+
+      console.log('Resource Center opened');
+    } else {
+      console.warn('Resource Center not available');
+    }
+  }
+
+  function closeResourceCenter() {
+    if (
+      window.pendo &&
+      window.pendo.BuildingBlocks &&
+      window.pendo.BuildingBlocks.BuildingBlockResourceCenter
+    ) {
+      window.pendo
+        .BuildingBlocks
+        .BuildingBlockResourceCenter
+        .dismissResourceCenter();
+
+      console.log('Resource Center dismissed');
+    }
+  }
+
+  document.getElementById('openRC').addEventListener('click', openResourceCenter);
+  document.getElementById('closeRC').addEventListener('click', closeResourceCenter);
+</script>
 
 </body>
 </html>
