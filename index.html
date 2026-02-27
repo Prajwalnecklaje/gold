@@ -2,104 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pendo Survey Test Page</title>
+  <title>Legacy Hash Login Reproduction</title>
 
-  <script>
-    // Create 10 fixed visitor IDs
-    const visitors = [
-      "test_user_01",
-      "test_user_02",
-      "test_user_03",
-      "test_user_04",
-      "test_user_05",
-      "test_user_06",
-      "test_user_07",
-      "test_user_08",
-      "test_user_09",
-      "test_user_10",
-      "Vignesh",
-      "Rakshith"
-    ];
+  <style>
+    body { font-family: Arial; padding: 40px; }
+    button { margin: 10px; padding: 10px 20px; }
+  </style>
 
-    // Rotate visitor on each refresh
-    let index = localStorage.getItem("visitorIndex");
-    index = index ? (parseInt(index) + 1) % visitors.length : 0;
-    localStorage.setItem("visitorIndex", index);
-
-    const visitorId = visitors[index];
-    console.log("Pendo Visitor ID:", visitorId);
-  </script>
-
-  <!-- Pendo Snippet -->
+  <!-- Load Pendo Agent (but DO NOT initialize yet) -->
   <script>
     (function(apiKey){
       (function(p,e,n,d,o){
         var v,w,x,y,z;o=p[d]=p[d]||{};
-        o._q=o._q||[];v=['initialize','identify','updateOptions','pageLoad','track'];
+        o._q=o._q||[];
+        v=['initialize','identify','updateOptions','pageLoad','track'];
         for(w=0,x=v.length;w<x;++w)(function(m){
-          o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};
+          o[m]=o[m]||function(){
+            o._q[m===v[0]?'unshift':'push'](
+              [m].concat([].slice.call(arguments,0))
+            );
+          };
         })(v[w]);
         y=e.createElement(n);y.async=!0;
-        y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+        y.src='https://cdn.pendo.io/agent/static/YOUR_API_KEY/pendo.js';
         z=e.getElementsByTagName(n)[0];
         z.parentNode.insertBefore(y,z);
       })(window,document,'script','pendo');
-
-      pendo.initialize({
-        visitor: { id: visitorId },
-        account: { id: "test_account_001" }
-      });
-
     })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
   </script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-    }
-  </style>
 </head>
-
 <body>
 
-  <h1>Pendo Survey Testing Page</h1>
+  <h1>Legacy App</h1>
 
-  <!-- Simulated SPA Navigation -->
-  <a href="#/signin">Go to Legacy Login (/#/signin)</a> |
+  <a href="#/signin">Go to Legacy Login</a> |
   <a href="#/home">Go to Home</a>
 
   <div id="app"></div>
 
   <script>
+    let isLoggedIn = false;
+
     function renderRoute() {
       const route = window.location.hash;
       const app = document.getElementById("app");
       app.innerHTML = "";
 
       if (route === "#/signin") {
-        // Simulate delayed rendering (like Angular/React legacy app)
-        setTimeout(() => {
-          app.innerHTML = `
-            <h2>Legacy Login Page</h2>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button>Login</button>
-          `;
-          console.log("Legacy login page rendered");
-        }, 2000);
+
+        // Login page (NO pendo.initialize here)
+        app.innerHTML = `
+          <h2>Legacy Login Page</h2>
+          <button onclick="login()">Login</button>
+        `;
+
       } else {
+
         app.innerHTML = `
           <h2>Home Page</h2>
-          <button id="featureA">Feature A</button>
-          <button id="featureB">Feature B</button>
-          <button id="featureC">Feature C</button>
+          <p>User is logged in</p>
         `;
+
+        // Initialize Pendo ONLY after login
+        if (isLoggedIn && !window.pendoInitialized) {
+          window.pendoInitialized = true;
+
+          pendo.initialize({
+            visitor: { id: "logged_in_user" },
+            account: { id: "test_account" }
+          });
+
+          console.log("Pendo initialized after login");
+        }
       }
+    }
+
+    function login() {
+      isLoggedIn = true;
+      window.location.hash = "#/home";
     }
 
     window.addEventListener("hashchange", renderRoute);
