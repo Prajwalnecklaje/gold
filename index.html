@@ -1,154 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Pendo Embedded Guide – RC Repro (Clean)</title>
+  <!-- Google Tag Manager -->
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table with Dynamic Popup</title>
+<style>
+/* CSS for the popup */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
+.popup-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+.block {
+    width: 60px;
+    height: 30px; /* Adjust height as needed */
+}
 
-    #table {
-      border: 1px solid #ccc;
-      padding: 20px;
-      min-height: 80px;
-      margin-top: 20px;
-    }
 
-    .loading {
-      color: #888;
-    }
-
-    .empty-state {
-      color: gray;
-    }
-
-    .row {
-      color: green;
-    }
-
-    button {
-      margin-right: 10px;
-      margin-top: 10px;
-      padding: 8px 14px;
-    }
-  </style>
+.popup:hover .popup-content {
+  display: block;
+}
+</style>
+  
 </head>
-
 <body>
+<!-- Google Tag Manager (noscript) -->
+<!-- End Google Tag Manager (noscript) -->
+<table border="1">
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+    <th>Options</th>
+  </tr>
+  <tr>
+    <td>Data 1</td>
+    <td>Data 2</td>
+    <td>
+      <div class="popup" onclick="showOptions('options1')">...</div>
+      <div id="options1" class="popup-content">
+        <p>Content for Option 1</p>
+        <p>Content for Option 2</p>
+        <p>Content for Option 3</p>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>Data 3</td>
+    <td>Data 4</td>
+    <td>
+      <div class="popup" onclick="showOptions('options2')">...</div>
+      <div id="options2" class="popup-content">
+        <p>Different Content for Option 1</p>
+        <p>Different Content for Option 2</p>
+        <p>Different Content for Option 3</p>
+      </div>
+      
+    </td>
+  </tr>
+</table>
+<div>
+   <h5  class="pendo-resource-center-badge-notification-bubble" >who are you man</h5> 
+</div>
+</section>
+  
+  <div > 
+        <button data-testid="action-plan-cell-action-ratings" > click me </button>
+      </div>
+      <div > 
+        <button data-testid="action-plan-ratings-button-RequestRating" > Dont me </button>
+      </div>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/y0sF5xhGreA?si=rpWz5dgrqO7pcgtW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<label for="dog-names">Choose a dog name:</label>
+<select name="dog-names" id="dog-names">
+    <option value="rigatoni">Rigatoni</option>
+    <option value="dave">Dave</option>
+    <option value="pumpernickel">Pumpernickel</option>
+    <option value="reeses">Reeses</option>
+</select>
 
-<h2>Embedded Guide – Correct Implementation (RC Repro)</h2>
-
-<!-- App buttons -->
-<button id="searchBtn">Search (No Results)</button>
-<button id="openRC">Open Help (Resource Center)</button>
-<button id="closeRC">Close Help</button>
-
-<div id="table"></div>
 
 <script>
-/* =====================================================
-   INITIAL PAGE LOAD (NO EMPTY STATE)
-===================================================== */
-
-const table = document.getElementById('table');
-
-// Show loading state instead of empty state
-table.innerHTML = `<div class="loading">Loading data…</div>`;
-
-// Simulate async data fetch
-setTimeout(() => {
-  table.innerHTML = `<div class="row">Row 1</div>`;
-}, 1000);
+function showOptions(id) {
+  var content = document.getElementById(id);
+  content.style.display = "block";
+}
 </script>
+<button type="button" class="block">
+    <a href="testing.html">Testing</a>
+</button>
+  <button type="button" class="block">
+    <a href="Toggle.html">Testing</a>
+</button>
 
+  <section>
 <script>
-/* =====================================================
-   USER SEARCH → NO RESULTS (EMPTY STATE APPEARS)
-===================================================== */
+  // Function to show the Resource Center
+function openResourceCenter() {
+    pendo.showGuideById('lYNTfdIt4to7sJgcAKZ-10vYhZw');
+}
 
-document.getElementById('searchBtn').onclick = () => {
-  table.innerHTML = `<div class="empty-state">No search results</div>`;
+// Event listener for when the page loads
+window.onload = function() {
+    openResourceCenter();
 };
+
 </script>
-
-<!-- =====================================================
-     PENDO INITIALIZATION (SAFE – ONCE)
-===================================================== -->
-<script>
-  (function(apiKey){
-    (function(p,e,n,d,o){
-      var v,w,x,y,z;
-      o=p[d]=p[d]||{};
-      o._q=o._q||[];
-      v=['initialize','identify','updateOptions','pageLoad','track'];
-      for(w=0,x=v.length;w<x;++w)(function(m){
-        o[m]=o[m]||function(){
-          o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));
-        };
-      })(v[w]);
-      y=e.createElement(n);y.async=!0;
-      y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
-      z=e.getElementsByTagName(n)[0];
-      z.parentNode.insertBefore(y,z);
-    })(window,document,'script','pendo');
-
-    // ✅ Initialize ONCE
-    pendo.initialize({
-      visitor: {
-        id: 'rc_repro_user'
-      },
-      account: {
-        id: 'rc_repro_account'
-      }
-    });
-
-    console.log('Pendo initialized');
-  })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
-</script>
-
-<!-- =====================================================
-     RESOURCE CENTER CONTROLS
-===================================================== -->
-<script>
-  function openResourceCenter() {
-    if (
-      window.pendo &&
-      window.pendo.BuildingBlocks &&
-      window.pendo.BuildingBlocks.BuildingBlockResourceCenter
-    ) {
-      window.pendo
-        .BuildingBlocks
-        .BuildingBlockResourceCenter
-        .getResourceCenter()
-        .show();
-
-      console.log('Resource Center opened');
-    } else {
-      console.warn('Resource Center not available');
-    }
-  }
-
-  function closeResourceCenter() {
-    if (
-      window.pendo &&
-      window.pendo.BuildingBlocks &&
-      window.pendo.BuildingBlocks.BuildingBlockResourceCenter
-    ) {
-      window.pendo
-        .BuildingBlocks
-        .BuildingBlockResourceCenter
-        .dismissResourceCenter();
-
-      console.log('Resource Center dismissed');
-    }
-  }
-
-  document.getElementById('openRC').addEventListener('click', openResourceCenter);
-  document.getElementById('closeRC').addEventListener('click', closeResourceCenter);
-</script>
-
+    <script src="./pendo/init.js"></script>
 </body>
 </html>
+
