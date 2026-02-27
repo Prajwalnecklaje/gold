@@ -1,123 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-<!-- End Google Tag Manager -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Table with Dynamic Popup</title>
-<style>
-/* CSS for the popup */
-.popup {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
+  <meta charset="UTF-8" />
+  <title>Pendo Survey Test Page</title>
 
-.popup-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 120px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
-}
-.block {
-    width: 60px;
-    height: 30px; /* Adjust height as needed */
-}
+  <script>
+    // Create 10 fixed visitor IDs
+    const visitors = [
+      "test_user_01",
+      "test_user_02",
+      "test_user_03",
+      "test_user_04",
+      "test_user_05",
+      "test_user_06",
+      "test_user_07",
+      "test_user_08",
+      "test_user_09",
+      "test_user_10",
+      "Vignesh",
+      "Rakshith"
+    ];
 
+    // Rotate visitor on each refresh
+    let index = localStorage.getItem("visitorIndex");
+    index = index ? (parseInt(index) + 1) % visitors.length : 0;
+    localStorage.setItem("visitorIndex", index);
 
-.popup:hover .popup-content {
-  display: block;
-}
-</style>
-  
+    const visitorId = visitors[index];
+    console.log("Pendo Visitor ID:", visitorId);
+  </script>
+
+  <!-- Pendo Snippet -->
+  <script>
+    (function(apiKey){
+      (function(p,e,n,d,o){
+        var v,w,x,y,z;o=p[d]=p[d]||{};
+        o._q=o._q||[];v=['initialize','identify','updateOptions','pageLoad','track'];
+        for(w=0,x=v.length;w<x;++w)(function(m){
+          o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};
+        })(v[w]);
+        y=e.createElement(n);y.async=!0;
+        y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+        z=e.getElementsByTagName(n)[0];
+        z.parentNode.insertBefore(y,z);
+      })(window,document,'script','pendo');
+
+      pendo.initialize({
+        visitor: { id: visitorId },
+        account: { id: "test_account_001" }
+      });
+
+    })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+    }
+  </style>
 </head>
+
 <body>
-<!-- Google Tag Manager (noscript) -->
-<!-- End Google Tag Manager (noscript) -->
-<table border="1">
-  <tr>
-    <th>Column 1</th>
-    <th>Column 2</th>
-    <th>Options</th>
-  </tr>
-  <tr>
-    <td>Data 1</td>
-    <td>Data 2</td>
-    <td>
-      <div class="popup" onclick="showOptions('options1')">...</div>
-      <div id="options1" class="popup-content">
-        <p>Content for Option 1</p>
-        <p>Content for Option 2</p>
-        <p>Content for Option 3</p>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>Data 3</td>
-    <td>Data 4</td>
-    <td>
-      <div class="popup" onclick="showOptions('options2')">...</div>
-      <div id="options2" class="popup-content">
-        <p>Different Content for Option 1</p>
-        <p>Different Content for Option 2</p>
-        <p>Different Content for Option 3</p>
-      </div>
-      
-    </td>
-  </tr>
-</table>
-<div>
-   <h5  class="pendo-resource-center-badge-notification-bubble" >who are you man</h5> 
-</div>
-</section>
-  
-  <div > 
-        <button data-testid="action-plan-cell-action-ratings" > click me </button>
-      </div>
-      <div > 
-        <button data-testid="action-plan-ratings-button-RequestRating" > Dont me </button>
-      </div>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/y0sF5xhGreA?si=rpWz5dgrqO7pcgtW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-<label for="dog-names">Choose a dog name:</label>
-<select name="dog-names" id="dog-names">
-    <option value="rigatoni">Rigatoni</option>
-    <option value="dave">Dave</option>
-    <option value="pumpernickel">Pumpernickel</option>
-    <option value="reeses">Reeses</option>
-</select>
 
+  <h1>Pendo Survey Testing Page</h1>
 
-<script>
-function showOptions(id) {
-  var content = document.getElementById(id);
-  content.style.display = "block";
-}
-</script>
-<button type="button" class="block">
-    <a href="testing.html">Testing</a>
-</button>
-  <button type="button" class="block">
-    <a href="Toggle.html">Testing</a>
-</button>
+  <!-- Simulated SPA Navigation -->
+  <a href="#/signin">Go to Legacy Login (/#/signin)</a> |
+  <a href="#/home">Go to Home</a>
 
-  <section>
-<script>
-  // Function to show the Resource Center
-function openResourceCenter() {
-    pendo.showGuideById('lYNTfdIt4to7sJgcAKZ-10vYhZw');
-}
+  <div id="app"></div>
 
-// Event listener for when the page loads
-window.onload = function() {
-    openResourceCenter();
-};
+  <script>
+    function renderRoute() {
+      const route = window.location.hash;
+      const app = document.getElementById("app");
+      app.innerHTML = "";
 
-</script>
-    <script src="./pendo/init.js"></script>
+      if (route === "#/signin") {
+        // Simulate delayed rendering (like Angular/React legacy app)
+        setTimeout(() => {
+          app.innerHTML = `
+            <h2>Legacy Login Page</h2>
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button>Login</button>
+          `;
+          console.log("Legacy login page rendered");
+        }, 2000);
+      } else {
+        app.innerHTML = `
+          <h2>Home Page</h2>
+          <button id="featureA">Feature A</button>
+          <button id="featureB">Feature B</button>
+          <button id="featureC">Feature C</button>
+        `;
+      }
+    }
+
+    window.addEventListener("hashchange", renderRoute);
+    window.addEventListener("load", renderRoute);
+  </script>
+
 </body>
 </html>
-
