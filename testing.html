@@ -1,94 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Document Details</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f4f4;
-            margin:0;
-            padding:0;
-        }
-
-        .container{
-            width:600px;
-            margin:80px auto;
-            background:white;
-            padding:30px;
-            border-radius:8px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
-        }
-
-        h1{
-            color:#333;
-        }
-
-        .doc-id{
-            font-size:18px;
-            margin-top:20px;
-            color:#0073e6;
-        }
-
-        .details{
-            margin-top:15px;
-            color:#555;
-        }
-
-        a{
-            display:inline-block;
-            margin-top:20px;
-            text-decoration:none;
-            background:#0073e6;
-            color:white;
-            padding:10px 15px;
-            border-radius:5px;
-        }
-    </style>
+<title>Document Page</title>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Document Details</h1>
+<h2>Open Document</h2>
 
-    <div class="doc-id">
-        Document ID: <span id="docId"></span>
-    </div>
-
-    <div class="details">
-        This page displays details for the selected document.
-    </div>
-
-    <a href="#/documents/12345/details">Open Sample Document</a>
-</div>
+<a href="/testing/#/documents/12345/details">Go to Document</a>
 
 <script>
 
-function loadPage() {
+function router() {
 
     const hash = window.location.hash;
 
-    const parts = hash.split("/");
+    if(hash.includes("/documents/")){
 
-    if(parts.length >= 4){
+        const parts = hash.split("/");
+        const id = parts[2];
 
-        const documentId = parts[2];
-
-        document.getElementById("docId").innerText = documentId;
-
-    }else{
-
-        document.getElementById("docId").innerText = "No Document Selected";
-
+        document.body.innerHTML += "<p>Document ID: " + id + "</p>";
     }
 
 }
 
-window.addEventListener("hashchange", loadPage);
-
-window.onload = loadPage;
+router();
 
 </script>
-<script src="./pendo/init.js"></script>
+
 </body>
 </html>
