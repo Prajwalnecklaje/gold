@@ -1,78 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Pendo Survey Test Page</title>
-
-   <script>
-    // Create 10 fixed visitor IDs
-    const visitors = [
-      "test_user_01",
-      "test_user_02",
-      "test_user_03",
-      "test_user_04",
-      "test_user_05",
-      "test_user_06",
-      "test_user_07",
-      "test_user_08",
-      "test_user_09",
-      "test_user_10",
-      "Vignesh",
-      "Rakshith"
-    ];
-
-    // Rotate visitor on each refresh
-    let index = localStorage.getItem("visitorIndex");
-    index = index ? (parseInt(index) + 1) % visitors.length : 0;
-    localStorage.setItem("visitorIndex", index);
-
-    const visitorId = visitors[index];
-    console.log("Pendo Visitor ID:", visitorId);
-  </script>
-  <!-- Pendo Snippet -->
-  <script>
-    (function(apiKey){
-      (function(p,e,n,d,o){
-        var v,w,x,y,z;o=p[d]=p[d]||{};
-        o._q=o._q||[];v=['initialize','identify','updateOptions','pageLoad','track'];
-        for(w=0,x=v.length;w<x;++w)(function(m){
-          o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};
-        })(v[w]);
-        y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
-        z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);
-      })(window,document,'script','pendo');
-
-      pendo.initialize({
-        visitor: {
-          id: "Prajwal_Cust"
-        },
-        account: {
-          id: "test_account_001"
+    <title>My Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
         }
-      });
-    })('043f5c9d-f8b2-4d0f-7fd8-6020c3074f67');
-  </script>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-    }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-    }
-  </style>
+        /* Navbar */
+        .navbar {
+            height: 60px;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* Content */
+        .content {
+            height: calc(100vh - 110px);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Footer */
+        .footer {
+            height: 50px;
+            background: #1e293b;
+            color: #cbd5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>Pendo Survey Testing Page</h1>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">MySite</div>
+        <div class="nav-links">
+            <a onclick="loadPage('home.html')">Home</a>
+            <a onclick="loadPage('services.html')">Services</a>
+            <a onclick="loadPage('about.html')">About</a>
+        </div>
+    </div>
 
-  <p>Use these buttons to represent different features.</p>
+    <!-- Iframe -->
+    <div class="content">
+        <iframe id="myFrame" src="home.html"></iframe>
+    </div>
 
-  <button id="featureA">Feature A</button>
-  <button id="featureB">Feature B</button>
-  <button id="featureC">Feature C</button>
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 MySite | Built with ❤️
+    </div>
+
+    <script>
+        function loadPage(page) {
+            document.getElementById("myFrame").src = page;
+        }
+    </script>
 
 </body>
 </html>
