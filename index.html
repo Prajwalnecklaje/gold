@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>My Website</title>
@@ -63,7 +63,7 @@
 </head>
 <body>
 
-    <!-- Navbar 
+    
     <div class="navbar">
         <div class="llggo">MySite</div>
         <div class="nav-links">
@@ -71,19 +71,19 @@
             <a onclick="loadPage('services.html')">Services</a>
             <a onclick="loadPage('about.html')">About</a>
         </div>
-    </div> -->
+    </div> 
 
-    <!-- Iframe
+    
     <div class="content">
         <iframe id="myFrame" src="home.html"></iframe>
     </div>
 
-    <!-- Footer 
+   
     <div class="footer">
         © 2026 MySite | Built with ❤️
-    </div> -->
+    </div> 
 
-  <!--  <script>
+ <script>
         function loadPage(page) {
             document.getElementById("myFrame").src = page;
         }
@@ -91,94 +91,5 @@
    <script src="pendo/init.js"></script>
 
 </body>
-</html> -->
+</html> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Pendo React-like Async Repro</title>
-  <style>
-    body {
-      font-family: Arial;
-      padding: 40px;
-    }
-
-    #app {
-      border: 2px dashed #aaa;
-      padding: 20px;
-      min-height: 150px;
-    }
-
-    .loader {
-      color: #888;
-    }
-
-    .card {
-      padding: 20px;
-      background: #f5f5f5;
-      margin-top: 20px;
-    }
-
-    .target {
-      margin-top: 15px;
-      padding: 10px 15px;
-      background: #2196F3;
-      color: white;
-      cursor: pointer;
-      display: inline-block;
-    }
-  </style>
-</head>
-<body>
-
-  <h1>React-like Async Rendering Demo</h1>
-  <p>This simulates how frameworks like React load and re-render elements.</p>
-
-  <div id="app"></div>
-
- <script>
-  const app = document.getElementById("app");
-
-  function renderLoading() {
-    app.innerHTML = `<div class="loader">Loading...</div>`;
-  }
-
-  function renderTarget() {
-    app.innerHTML = `
-      <div class="card">
-        <h3>Async Content</h3>
-        <div class="target">Hover Target</div>
-      </div>
-    `;
-  }
-
-  function simulateBreak() {
-    renderLoading();
-
-    // Step 1: Delay initial render (element NOT present)
-    setTimeout(() => {
-      renderTarget();
-      console.log("Element mounted");
-
-      // Step 2: REMOVE element quickly (this is key 🔥)
-      setTimeout(() => {
-        app.innerHTML = `<div class="loader">Re-rendering...</div>`;
-        console.log("Element removed");
-
-        // Step 3: Add again after delay
-        setTimeout(() => {
-          renderTarget();
-          console.log("Element re-mounted");
-        }, 1500);
-
-      }, 500); // very fast removal → causes race condition
-
-    }, 2500); // delay ensures Pendo runs first
-  }
-
-  simulateBreak();
-</script>
-     <script src="pendo/init.js"></script>
-</body>
-</html>
