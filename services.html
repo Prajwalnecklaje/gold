@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -41,5 +41,94 @@
     <p>Deploy and scale with cloud platforms.</p>
 </div>
  <script src="pendo/init.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pendo Theme Detection Test</title>
+
+  <style>
+    :root {
+      --theme-mode: light;
+      --bg-color: #ffffff;
+      --text-color: #000000;
+    }
+
+    body.dark {
+      --theme-mode: dark;
+      --bg-color: #121212;
+      --text-color: #ffffff;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: 0.3s ease;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    /* Simulated app content */
+    .app-container {
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    /* Simulated Pendo guide container */
+    ._pendo-step-container-size {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px dashed #888;
+      border-radius: 8px;
+      min-height: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button onclick="toggleTheme()">Toggle Light / Dark</button>
+
+  <div class="app-container">
+    <h2>Customer App Simulation</h2>
+    <p>This page uses CSS variables for theme (like customer app).</p>
+
+    <!-- This is where Pendo guide content will appear -->
+    <div class="_pendo-step-container-size">
+      <p>Pendo Guide will inject content here (SVG etc.)</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      console.log("Theme changed to:",
+        getComputedStyle(document.documentElement)
+          .getPropertyValue('--theme-mode').trim()
+      );
+    }
+
+    // Helper (same logic Claude gave)
+    function isDarkMode() {
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue('--theme-mode').trim() === 'dark';
+    }
+
+    // Expose globally so you can use inside Pendo guide JS
+    window.pendoThemeHelper = {
+      isDarkMode
+    };
+  </script>
+<script src="pendo/init.js"></script>
 </body>
 </html>
