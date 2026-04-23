@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>My Website</title>
@@ -63,7 +63,7 @@
 </head>
 <body>
 
-    <!-- Navbar -->
+    <!-- Navbar 
     <div class="navbar">
         <div class="llggo">MySite</div>
         <div class="nav-links">
@@ -71,24 +71,125 @@
             <a onclick="loadPage('services.html')">Services</a>
             <a onclick="loadPage('about.html')">About</a>
         </div>
-    </div>
+    </div> -->
 
-    <!-- Iframe -->
+    <!-- Iframe
     <div class="content">
         <iframe id="myFrame" src="home.html"></iframe>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer 
     <div class="footer">
         © 2026 MySite | Built with ❤️
-    </div>
+    </div> -->
 
-    <script>
+  <!--  <script>
         function loadPage(page) {
             document.getElementById("myFrame").src = page;
         }
     </script>
    <script src="pendo/init.js"></script>
 
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendo React-like Async Repro</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 40px;
+    }
+
+    #app {
+      border: 2px dashed #aaa;
+      padding: 20px;
+      min-height: 150px;
+    }
+
+    .loader {
+      color: #888;
+    }
+
+    .card {
+      padding: 20px;
+      background: #f5f5f5;
+      margin-top: 20px;
+    }
+
+    .target {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: #2196F3;
+      color: white;
+      cursor: pointer;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>React-like Async Rendering Demo</h1>
+  <p>This simulates how frameworks like React load and re-render elements.</p>
+
+  <div id="app"></div>
+
+  <script>
+    const app = document.getElementById("app");
+
+    function renderLoading() {
+      app.innerHTML = `<div class="loader">Loading data...</div>`;
+    }
+
+    function renderComponent(data) {
+      app.innerHTML = `
+        <div class="card">
+          <h3>${data.title}</h3>
+          <p>${data.description}</p>
+          <div class="target">Hover Target (Rendered Late)</div>
+        </div>
+      `;
+    }
+
+    function simulateApp() {
+      // Step 1: Initial render (empty/loading)
+      renderLoading();
+
+      // Step 2: Simulate API delay
+      setTimeout(() => {
+        renderComponent({
+          title: "Account Info",
+          description: "This content was loaded asynchronously"
+        });
+
+        console.log("Component mounted");
+
+        // Step 3: Simulate re-render (React behavior)
+        setTimeout(() => {
+          renderLoading();
+
+          console.log("Component unmounted");
+
+          setTimeout(() => {
+            renderComponent({
+              title: "Account Info (Re-rendered)",
+              description: "Component re-mounted again"
+            });
+
+            console.log("Component re-mounted");
+
+          }, 1500);
+
+        }, 2000);
+
+      }, 2000);
+    }
+
+    simulateApp();
+  </script>
+<script src="pendo/init.js"></script>
 </body>
 </html>
