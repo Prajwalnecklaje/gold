@@ -137,59 +137,48 @@
 
   <div id="app"></div>
 
-  <script>
-    const app = document.getElementById("app");
+ <script>
+  const app = document.getElementById("app");
 
-    function renderLoading() {
-      app.innerHTML = `<div class="loader">Loading data...</div>`;
-    }
+  function renderLoading() {
+    app.innerHTML = `<div class="loader">Loading...</div>`;
+  }
 
-    function renderComponent(data) {
-      app.innerHTML = `
-        <div class="card">
-          <h3>${data.title}</h3>
-          <p>${data.description}</p>
-          <div class="target">Hover Target (Rendered Late)</div>
-        </div>
-      `;
-    }
+  function renderTarget() {
+    app.innerHTML = `
+      <div class="card">
+        <h3>Async Content</h3>
+        <div class="target">Hover Target</div>
+      </div>
+    `;
+  }
 
-    function simulateApp() {
-      // Step 1: Initial render (empty/loading)
-      renderLoading();
+  function simulateBreak() {
+    renderLoading();
 
-      // Step 2: Simulate API delay
+    // Step 1: Delay initial render (element NOT present)
+    setTimeout(() => {
+      renderTarget();
+      console.log("Element mounted");
+
+      // Step 2: REMOVE element quickly (this is key 🔥)
       setTimeout(() => {
-        renderComponent({
-          title: "Account Info",
-          description: "This content was loaded asynchronously"
-        });
+        app.innerHTML = `<div class="loader">Re-rendering...</div>`;
+        console.log("Element removed");
 
-        console.log("Component mounted");
-
-        // Step 3: Simulate re-render (React behavior)
+        // Step 3: Add again after delay
         setTimeout(() => {
-          renderLoading();
+          renderTarget();
+          console.log("Element re-mounted");
+        }, 1500);
 
-          console.log("Component unmounted");
+      }, 500); // very fast removal → causes race condition
 
-          setTimeout(() => {
-            renderComponent({
-              title: "Account Info (Re-rendered)",
-              description: "Component re-mounted again"
-            });
+    }, 2500); // delay ensures Pendo runs first
+  }
 
-            console.log("Component re-mounted");
-
-          }, 1500);
-
-        }, 2000);
-
-      }, 2000);
-    }
-
-    simulateApp();
-  </script>
-<script src="pendo/init.js"></script>
+  simulateBreak();
+</script>
+     <script src="pendo/init.js"></script>
 </body>
 </html>
