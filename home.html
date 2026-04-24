@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <style>
@@ -69,6 +69,114 @@
         <p>Grow your business without limits.</p>
     </div>
 </div>
+ <script src="pendo/init.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Z-Index Issue Repro</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 200vh;
+    }
+
+    /* Landing Page Content */
+    .content {
+      padding: 50px;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    /* Overlay (Simulates app modal / popup) */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999; /* HIGH */
+      display: none;
+    }
+
+    .overlay-box {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    /* CSAT Guide (Simulating Pendo Guide) */
+    .csat-guide {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background: #fff;
+      border: 2px solid #4CAF50;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000; /* LOWER than overlay → issue */
+    }
+
+    /* FIX (toggle this class to test) */
+    .fix-zindex {
+      z-index: 10000 !important;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="content">
+    <h1>Landing Page</h1>
+    <button onclick="openOverlay()">Open Overlay</button>
+    <button onclick="toggleFix()">Toggle Z-Index Fix</button>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-box">
+      <h3>Overlay Modal</h3>
+      <button onclick="closeOverlay()">Close</button>
+    </div>
+  </div>
+
+  <!-- CSAT Guide -->
+  <div class="csat-guide" id="csat">
+    <h4>CSAT Survey</h4>
+    <p>How was your experience?</p>
+    <button>😊</button>
+    <button>😐</button>
+    <button>😞</button>
+  </div>
+
+  <script>
+    function openOverlay() {
+      document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeOverlay() {
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function toggleFix() {
+      document.getElementById("csat").classList.toggle("fix-zindex");
+    }
+  </script>
  <script src="pendo/init.js"></script>
 </body>
 </html>
