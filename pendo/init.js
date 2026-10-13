@@ -11,6 +11,7 @@
         pendo.initialize({
              visitor: {
                 id: "Adriana110424@SphinxSolutions.com",
+                onboardingManagerZoomLink: "https://calltrackingmetrics.zoom.us/zbook/peter-bacon",
                 
             },
         
